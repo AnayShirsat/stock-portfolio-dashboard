@@ -22,12 +22,26 @@ if "portfolio" not in st.session_state:
    #     - stock["Qty"] * stock["Buy"]
     #)
 
+total_invested = 0
 total_value = 0
 total_profit = 0
 
 for stock in st.session_state.portfolio:
+
+    invested = stock["Qty"] * stock["Buy"]
+
+    total_invested += invested
+
     total_value += stock["Qty"] * stock["Current"]
-    total_profit += stock.get("Profit", 0)
+
+    total_profit += stock.get("Profit", 0) 
+
+if total_invested > 0:
+    return_percent = (
+        total_profit / total_invested
+    ) * 100
+else:
+    return_percent = 0    
 
 st.title("📈 Stock Portfolio Dashboard")
 
@@ -88,14 +102,31 @@ if st.button("🔄 Refresh Prices"):
 
     st.rerun()    
 
-col1, col2 = st.columns(2)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
-    st.metric("Portfolio Value", f"₹{total_value:,.2f}")
+    st.metric(
+        "Total Invested",
+        f"₹{total_invested:,.2f}"
+    )
 
 with col2:
-    st.metric("Total Profit", f"₹{total_profit:,.2f}")
+    st.metric(
+        "Portfolio Value",
+        f"₹{total_value:,.2f}"
+    )
 
+with col3:
+    st.metric(
+        "Total Profit",
+        f"₹{total_profit:,.2f}"
+    )
+
+with col4:
+    st.metric(
+        "Return %",
+        f"{return_percent:.2f}%"
+    )    
 
 st.write("Welcome to my first fintech project 🚀")
 
