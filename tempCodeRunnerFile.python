@@ -1,0 +1,13 @@
+portfolio =[]
+stock_name = input("Enter stock name : ")
+qty = int(input("Enter quantity : "))
+buy_price = float(input("Enter buy price :"))
+current_price = float(input("Enter current price :"))
+stock = {
+    "stock": stock_name,
+    "qty": qty,
+    "buy": buy_price,
+    "current": current_price
+}
+portfolio.append(stock)
+print(portfolio)
